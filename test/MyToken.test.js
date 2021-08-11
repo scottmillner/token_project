@@ -1,22 +1,45 @@
 const Token = artifacts.require('MyToken');
 
-const chai = require('chai');
-const BN = web3.utils.BN; // web3 automatically injected in truffle tests
-const chaiBN = require('chai-bn')(BN);
-chai.use(chaiBN);
-
-const chaiAsPromised = require('chai-as-promised');
-chai.use(chaiAsPromised);
-
+const chai = require('./chaisetup');
+const BN = web3.utils.BN;
 const expect = chai.expect;
 
 contract('Token Test', async (accounts) => {
+	const [deployerAccount, recipient, anotherAccount] = accounts;
+
+	beforeEach(async () => {
+		this.testToken = await Token.new(1000000);
+	});
+
 	it('should place all tokens in my account', async () => {
 		// Arrange
-		let instance = await Token.deployed();
-		let totalSupply = await instance.totalSupply();
+		const instance = this.testToken;
+		const totalSupply = await instance.totalSupply();
 
 		// Assert
-		expect(instance.balanceOf(accounts[0])).to.eventually.be.a.bignumber.equal(totalSupply);
+		await expect(instance.balanceOf(deployerAccount)).to.eventually.be.a.bignumber.equal(totalSupply);
+	});
+
+	it('is possible to send tokens between accounts', async () => {
+		// Arrange
+		const numOfTokensToSend = 1;
+		const instance = this.testToken;
+		const totalSupply = await instance.totalSupply();
+
+		// Act/Assert
+		await expect(instance.balanceOf(deployerAccount)).to.eventually.be.a.bignumber.equal(totalSupply);
+		await expect(instance.transfer(recipient, new BN(numOfTokensToSend))).to.eventually.be.fulfilled;
+		await expect(instance.balanceOf(deployerAccount)).to.eventually.be.a.bignumber.equal(totalSupply.sub(new BN(numOfTokensToSend)));
+		await expect(instance.balanceOf(recipient)).to.eventually.be.a.bignumber.equal(new BN(numOfTokensToSend));
+	});
+
+	it('is not possible to send more tokens than available in total', async () => {
+		// Arrange
+		const instance = this.testToken;
+		const balanceOfDeployer = await instance.balanceOf(deployerAccount);
+
+		// Act/Assert
+		await expect(instance.transfer(recipient, new BN(balanceOfDeployer + 1))).to.eventually.be.rejected;
+		await expect(instance.balanceOf(deployerAccount)).to.eventually.be.a.bignumber.equal(balanceOfDeployer);
 	});
 });
