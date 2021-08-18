@@ -4,6 +4,7 @@ const chai = require('./chaisetup');
 const BN = web3.utils.BN;
 const expect = chai.expect;
 
+// TODO: break out asserts into individual tests
 contract('Token Test', async (accounts) => {
 	const [deployerAccount, recipient, anotherAccount] = accounts;
 
