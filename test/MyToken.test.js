@@ -4,12 +4,14 @@ const chai = require('./chaisetup');
 const BN = web3.utils.BN;
 const expect = chai.expect;
 
+require('dotenv').config({ path: '../.env' });
+
 // TODO: break out asserts into individual tests
 contract('Token Test', async (accounts) => {
 	const [deployerAccount, recipient, anotherAccount] = accounts;
 
 	beforeEach(async () => {
-		this.testToken = await Token.new(1000000);
+		this.testToken = await Token.new(process.env.INITIAL_TOKENS);
 	});
 
 	it('should place all tokens in my account', async () => {
