@@ -7,4 +7,5 @@ chai.use(chaiBN);
 
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
+
 module.exports = chai;

@@ -8,6 +8,7 @@ require('dotenv').config({ path: '../.env' });
 
 // TODO: break out asserts into individual tests
 contract('Token Test', async (accounts) => {
+	// Arrange
 	const [deployerAccount, recipient, anotherAccount] = accounts;
 
 	beforeEach(async () => {
