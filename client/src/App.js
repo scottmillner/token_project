@@ -7,7 +7,7 @@ import getWeb3 from './getWeb3';
 import './App.css';
 
 class App extends Component {
-	state = { isLoaded: false, kycAddress: '0x123...' };
+	state = { isLoaded: false, kycAddress: '0x123...', tokenSaleAddress: null };
 
 	componentDidMount = async () => {
 		try {
@@ -38,7 +38,7 @@ class App extends Component {
 
 			// Set web3, accounts, and contract to the state, and then proceed with an
 			// example of interacting with the contract's methods.
-			this.setState({ isLoaded: true });
+			this.setState({ isLoaded: true, tokenSaleAddress: this.deployedNetworkMyTokenSale.address });
 		} catch (error) {
 			// Catch any errors for any of the above operations.
 			alert(`Failed to load web3, accounts, or contract. Check console for details.`);
@@ -73,6 +73,8 @@ class App extends Component {
 				<button type='button' onClick={this.handleKycWhitelisting}>
 					Add to whitelist
 				</button>
+				<h2>Buy Tokens</h2>
+				<p>To buy tokens, send Wei to this address: {this.state.tokenSaleAddress}</p>
 			</div>
 		);
 	}

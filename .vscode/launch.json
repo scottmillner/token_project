@@ -5,6 +5,16 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Chrome",
+			"request": "launch",
+			"type": "pwa-chrome",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}",
+			"runtimeArgs": [
+				"--load-extension=${env:userprofile}/AppData/Local/Google/Chrome/User Data/Profile 2/Extensions/nkbihfbeogaeaoehlefnkodbefgpgknn/10.0.2_0"
+			]
+		},
+		{
 			"name": "truffle test",
 			"type": "node",
 			"request": "launch",

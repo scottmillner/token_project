@@ -14,7 +14,7 @@ module.exports = {
 			port: 7545,
 			network_id: 5777,
 		},
-		ganacheLocal: {
+		ganache_local: {
 			provider: function () {
 				return new HDWalletProvider(process.env.MNEMONIC, 'http://127.0.0.1:7545', accountIndex);
 			},
@@ -24,6 +24,10 @@ module.exports = {
 	compilers: {
 		solc: {
 			version: '^0.6.0',
+			optimizer: {
+				enabled: true,
+				runs: 200,
+			},
 		},
 	},
 };
