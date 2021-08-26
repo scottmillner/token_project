@@ -2397,7 +2397,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.2",
-  "updatedAt": "2021-08-25T12:51:32.320Z",
+  "updatedAt": "2021-08-26T12:14:52.285Z",
   "devdoc": {
     "details": "Collection of functions related to the address type",
     "kind": "dev",
